@@ -239,11 +239,21 @@
                             // Load consultations when the document is ready
                             loadConsultations();
                         });
-                        Echo.private(`App.Models.User.${userId}`)
-                            .notification((notification) => {
-                                console.log(notification.message);
-                                alert(notification.message);
+                        // Echo.private(`App.Models.User.${userId}`)
+                        //     .notification((notification) => {
+                        //         console.log(notification.message);
+                        //         alert(notification.message);
+                        //});
+                        messaging.getToken().then((token) => {
+                            $.post('/save-token', {
+                                token: token,
+                                _token: "{{ csrf_token() }}"
+                            }).done((response) => {
+                                console.log('Token saved:', response);
+                            }).fail((error) => {
+                                console.error('Error saving token:', error);
                             });
+                        });
                     </script>
                 </div>
             </div>

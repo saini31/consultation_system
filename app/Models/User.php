@@ -52,4 +52,14 @@ class User extends Authenticatable
     //         'expires_at' => $expiresAt,
     //     ]);
     // }
+    public function consultations()
+    {
+        return $this->hasMany(Consultation::class, 'user_id');
+    }
+
+    // Relationship to consultations where the user is the professional
+    public function professionalConsultations()
+    {
+        return $this->hasMany(Consultation::class, 'professional_id');
+    }
 }

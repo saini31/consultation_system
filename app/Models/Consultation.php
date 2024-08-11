@@ -15,4 +15,15 @@ class Consultation extends Model
         'scheduled_at',
         'notes',
     ];
+    // Relationship to the user who scheduled the consultation
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // Relationship to the professional handling the consultation
+    public function professional()
+    {
+        return $this->belongsTo(User::class, 'professional_id');
+    }
 }

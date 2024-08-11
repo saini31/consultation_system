@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,5 +33,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::post('/save-token', function (Request $request) {
+    $user = Auth::user();
 
+    // Assuming 'fsm' is the column name where you want to save the Firebase token
+    $user->fsm_token = $request->input('token');
+    $user->save();
+
+    return response()->json(['success' => true]);
+})->middleware('auth');
 require __DIR__ . '/auth.php';
